@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Payment | Razorpay</title>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: #f8fafc;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .payment-container {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            width: 100%;
+            max-width: 420px;
+            padding: 32px;
+            text-align: center;
+        }
+        
+        .payment-header {
+            margin-bottom: 24px;
+        }
+        
+        .payment-logo {
+            width: 120px;
+            margin-bottom: 16px;
+        }
+        
+        .payment-title {
+            font-size: 20px;
+            font-weight: 600;
+            color: #1e293b;
+            margin-bottom: 8px;
+        }
+        
+        .payment-description {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 24px;
+        }
+        
+        .payment-amount {
+            background-color: #f1f5f9;
+            border-radius: 8px;
+            padding: 16px;
+            margin-bottom: 24px;
+        }
+        
+        .amount-label {
+            font-size: 14px;
+            color: #64748b;
+            margin-bottom: 4px;
+        }
+        
+        .amount-value {
+            font-size: 28px;
+            font-weight: 600;
+            color: #1e293b;
+        }
+        
+        .payment-button {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 24px;
+            font-size: 16px;
+            font-weight: 500;
+            width: 100%;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .payment-button:hover {
+            background-color: #4338ca;
+        }
+        
+        .payment-button:active {
+            background-color: #3730a3;
+        }
+        
+        .payment-footer {
+            margin-top: 24px;
+            font-size: 12px;
+            color: #94a3b8;
+        }
+        
+        .secure-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            margin-top: 16px;
+            font-size: 13px;
+            color: #64748b;
+        }
+        
+        .payment-features {
+            margin-top: 24px;
+            text-align: left;
+        }
+        
+        .feature-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 12px;
+            font-size: 14px;
+            color: #475569;
+        }
+
+        .popup-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .popup-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .popup-button {
+            background-color: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            padding: 10px 20px;
+            font-size: 14px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .popup-button:hover {
+            background-color: #4338ca;
+        }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <div class="payment-header">
+            <img src="https://razorpay.com/assets/razorpay-logo.svg" alt="Razorpay" class="payment-logo">
+            <h1 class="payment-title">Complete Your Payment</h1>
+            <p class="payment-description">Secure payment processed by Razorpay</p>
+        </div>
+        
+        <div class="payment-amount">
+            <div class="amount-label">Total Amount</div>
+            <div class="amount-value">₹{{ amount }}</div>
+        </div>
+        
+        <button id="rzp-button1" class="payment-button">
+            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+            </svg>
+            Proceed to Pay
+        </button>
+        
+        <div class="payment-features">
+            <div class="feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Secure SSL Encryption
+            </div>
+            <div class="feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Multiple Payment Options
+            </div>
+            <div class="feature-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#10b981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                    <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                </svg>
+                Instant Payment Confirmation
+            </div>
+        </div>
+        
+        <div class="payment-footer">
+            <p>You'll be redirected to Razorpay's secure payment page</p>
+            <div class="secure-badge">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#64748b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                    <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                </svg>
+                100% Secure Payments
+            </div>
+        </div>
+    </div>
+
+    <div id="custom-popup" class="popup-overlay" style="display: none;">
+        <div class="popup-content">
+            <p id="popup-message"></p>
+            <button id="popup-ok-button" class="popup-button">OK</button>
+        </div>
+    </div>
+
+    <script>
+        var businessIdFromContext = '{{ business_id|escapejs }}';
+        var userIdFromContext = '{{ user_id|escapejs }}';
+
+        function onButtonClick() {
+            console.log("Attempting to call Android interface...");
+            if (window.androidInterface && typeof window.androidInterface.goToNextScreen === 'function') {
+                try {
+                    window.androidInterface.goToNextScreen();
+                    console.log("Called window.androidInterface.goToNextScreen()");
+                } catch (e) {
+                    console.error("Error calling androidInterface.goToNextScreen: ", e);
+                }
+            } else {
+                console.warn("window.androidInterface.goToNextScreen is not available.");
+            }
+        }
+
+        function showPopupMessage(message) {
+            const popup = document.getElementById('custom-popup');
+            const messageElement = document.getElementById('popup-message');
+            const okButton = document.getElementById('popup-ok-button');
+
+            messageElement.textContent = message;
+            popup.style.display = 'flex';
+
+            okButton.onclick = function () {
+                popup.style.display = 'none';
+            };
+        }
+
+        function sendPaymentResultToBackend(data, status) {
+            let payment_method = data.razorpay_method || data.method;
+            let upi_id = data.razorpay_vpa || data.vpa;
+
+            fetch('http://127.0.0.1:8000/kirazee/business/save-payment-data/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    transaction_id: data.razorpay_payment_id || 'no_txn_id',
+                    amount: options.amount / 100,
+                    currency: 'INR',
+                    payment_method: payment_method,
+                    status: status,
+                    upi_id: upi_id,
+                    business_id: businessIdFromContext,
+                    user_id: userIdFromContext,
+                })
+            })
+            .then(res => res.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    showPopupMessage('Congratulations! Your business has been successfully created');
+                } else {
+                    showPopupMessage('Failed to save payment result!');
+                }
+            });
+        }
+
+        const RAZORPAY_KEY_ID = 'rzp_test_FyTPzapsnjk4Jt';
+        var options = {
+            key: RAZORPAY_KEY_ID,
+            amount: "{{ amount }}00",
+            currency: "INR",
+            name: "Kirazee",
+            image: "https://tse2.mm.bing.net/th/id/OIP.WeUf7Bc9F-a67kj8kljMOgHaE7?rs=1&pid=ImgDetMain&o=7&rm=3",
+            handler: function(response) {
+                if (rzp1 && rzp1.payment) {
+                    response.razorpay_method = rzp1.payment.method;
+                    if (rzp1.payment.method === 'upi') {
+                        response.razorpay_vpa = rzp1.payment.vpa;
+                    }
+                }
+                sendPaymentResultToBackend(response, 'success');
+                showPopupMessage("Payment successful..!");
+            },
+            prefill: {
+                name: "Customer Name",
+                email: "customer@example.com",
+                contact: "7075787677"
+            },
+            theme: {
+                color: "#4f46e5"
+            }
+        };
+
+        var rzp1 = new Razorpay(options);
+
+        rzp1.on('payment.failed', function(response) {
+            const metadata = response.error.metadata || {};
+            const failedData = {
+                razorpay_payment_id: metadata.payment_id,
+                razorpay_method: metadata.method,
+                razorpay_vpa: metadata.vpa,
+                amount: options.amount / 100,
+            };
+            
+            sendPaymentResultToBackend(failedData, 'failed');
+            showPopupMessage("Payment failed. Error: " + response.error.description);
+        });
+
+        document.getElementById('rzp-button1').onclick = function(e) {
+            rzp1.open();
+            e.preventDefault();
+        };
+    </script>
+</body>
+</html>

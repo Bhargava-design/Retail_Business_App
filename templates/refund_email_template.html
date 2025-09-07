@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; padding: 20px; }
+        .container { background-color: #ffffff; border-radius: 8px; box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); padding: 20px; max-width: 600px; margin: auto; }
+        .header { text-align: center; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-bottom: 20px; }
+        .content { font-size: 16px; color: #333333; line-height: 1.6; }
+        .amount { font-size: 24px; font-weight: bold; color: #27ae60; text-align: center; margin: 20px 0; }
+        .footer { text-align: center; font-size: 12px; color: #777777; margin-top: 20px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h2>Refund Processed</h2>
+        </div>
+        <div class="content">
+            <p>Dear Customer,</p>
+            <p>We are writing to inform you that your payment has been successfully refunded.</p>
+            <div class="amount">
+                Refund Amount: ₹{{ amount }}
+            </div>
+            <p>The amount has been credited to your original payment source. Depending on your bank's policies, it may take 5-7 business days for the amount to reflect in your account.</p>
+            <p>If you have any questions, please do not hesitate to contact our support team.</p>
+        </div>
+        <div class="footer">
+            <p>Thank you for your business.</p>
+            <p>The Kirazee Team</p>
+        </div>
+    </div>
+</body>
+</html>
